@@ -8,4 +8,7 @@
 ░▒▓███████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓████████▓▒░ 
 ```
                                                                    
-                                                                   
+                                   
+
+This Python3 project uses the Turtle libray to create the classic Snake game.
+Enjoy!
