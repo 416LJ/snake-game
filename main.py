@@ -36,11 +36,8 @@ while game_is_on:
         score.final_score()
         game_is_on = False
 
-    for bit in snake.the_snake:
-        if bit == snake.the_snake[0]:
-            pass
-        elif snake.head.distance(bit) < 10:
-
+    for bit in snake.the_snake[1:]:
+        if snake.head.distance(bit) < 10:
             game_is_on = False
             score.final_score()
 
