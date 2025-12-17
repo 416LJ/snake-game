@@ -5,23 +5,24 @@ UP = 90
 DOWN = 270
 LEFT = 180
 RIGHT = 0
-
+STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
 class Snake:
     def __init__(self):
-        self.position = None
-        self.the_snake = []
-        self.x_cord =0
+        self.segments = []
+        self.create_snake()
+        self.head = self.segments[0]
 
-        for i in range(3):
-            self.add_segment(i)
-        self.head = self.the_snake[0]
+
+    def create_snake(self):
+        for position in STARTING_POSITIONS:
+            self.add_segment(position)
+        self.head = self.segments[0]
 
     def move(self):
-        # ge the snake to follower each other
-        for bit in range(len(self.the_snake) - 1, 0, -1):
-            new_x = self.the_snake[bit - 1].xcor()
-            new_y = self.the_snake[bit - 1].ycor()
-            self.the_snake[bit].goto(x=new_x, y=new_y)
+        for bit in range(len(self.segments) - 1, 0, -1):
+            new_x = self.segments[bit - 1].xcor()
+            new_y = self.segments[bit - 1].ycor()
+            self.segments[bit].goto(x=new_x, y=new_y)
         self.head.forward(20)
 
     def up(self):
@@ -42,19 +43,25 @@ class Snake:
 
 
     def add_segment(self,position):
-        self.position = Turtle(shape="square")
-        self.position.penup()
-        self.position.speed("fastest")
-        self.x_cord -= 20
-        self.position.color("white")
-        self.position.goto(x=self.x_cord, y=0)
-        self.the_snake.append(self.position)
+        new_segment = Turtle(shape="square")
+        new_segment.penup()
+        new_segment.speed("fastest")
+        new_segment.color("white")
+        self.segments.append(new_segment)
 
     def extend(self):
-        self.add_segment(self.the_snake[-1].position())
+        self.add_segment(self.segments[-1].position())
 
-    def check_margins(self):
-        if 280 >= self.head.xcor() >= -280 and 280 >= self.head.ycor() >= -280:
-            return True
-        else:
-            return False
+    def reset_snake(self):
+        for segment in self.segments:
+            segment.goto(1000,1000)
+        self.segments.clear()
+        self.segments = []
+        self.create_snake()
+        self.head = self.segments[0]
+
+
+    def check_tail(self):
+        for bit in self.segments[1:]:
+            if self.head.distance(bit) < 10:
+                return True
